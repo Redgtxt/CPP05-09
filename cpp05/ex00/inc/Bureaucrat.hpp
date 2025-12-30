@@ -1,4 +1,5 @@
 #include <iostream>
+#include <exception>
 
 /*
     bureaucrat
@@ -21,58 +22,17 @@ private:
     const std::string _name;
     int _grade;
 public:
-    //Bureaucrat();
-    Bureaucrat(std::string name,int grade);
+    class GradeTooHighException : public std::exception {
+        public:
+            virtual const char* what() const throw();
+    };
+
     Bureaucrat(int grade);
+    Bureaucrat(std::string name,int grade);
     Bureaucrat(const Bureaucrat &obj);
     Bureaucrat& operator=(const Bureaucrat& other);
     ~Bureaucrat();
-
     const std::string& getName() const;
     int getGrade() const;
 };
 
-Bureaucrat::Bureaucrat(int grade) : _name("Unkowned") ,_grade(grade)
-{
-    std::cout << "Bureaucrat with name " << this->getName() <<" and grade " << this->getGrade() << std::endl;
-}
-
-Bureaucrat::Bureaucrat(std::string name,int grade) : _name(name) ,_grade(grade)
-{
-    std::cout << "Bureaucrat with name " << this->getName() <<" and grade " << this->getGrade() << std::endl;
-}
-int Bureaucrat::getGrade() const
-{
-    return this->_grade;
-}
-
-Bureaucrat& Bureaucrat::operator=(const Bureaucrat& other)
-{
-    std::cout << "Copy assignment Bureaucrat operator called" << std::endl;
-
-    if(this != &other)
-    {
-        _grade = other.getGrade();
-    }
-    
-    return *this;
-}
-
-Bureaucrat::Bureaucrat(const Bureaucrat &obj)
-{
-    std::cout << "Bureaucrat Copy constructor called" << std::endl;
-    *this = obj;
-}
-
-const std::string& Bureaucrat::getName() 
-const
-{
-    return this->_name;
-}
-
-
-
-Bureaucrat::~Bureaucrat()
-{
-    std::cout << "destructor called" << std::endl;
-}
