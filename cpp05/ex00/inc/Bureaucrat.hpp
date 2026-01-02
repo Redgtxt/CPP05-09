@@ -4,16 +4,16 @@
 /*
     bureaucrat
     [x] const name
-    [] const grade range 1-150
+    [X] grade range 1-150
         1 e o valor mais alto
         150 o mais baixo
 
     [x]getName()
     [x]getGrade()
-    []funcao que incrementa a grade de um bureaucrat
-    []funcao que decremente a grade de um bureaucrat
+    [x]funcao que incrementa a grade de um bureaucrat
+    [x]funcao que decremente a grade de um bureaucrat
 
-    []ovrload << que printe <name>, bureaucrat grade <grade>.
+    [x] ovrload << que printe <name>, bureaucrat grade <grade>.
 */
 
 class Bureaucrat
@@ -24,7 +24,12 @@ private:
 public:
     class GradeTooHighException : public std::exception {
         public:
-            virtual const char* what() const throw();
+            const char* what() const throw();
+    };
+
+    class GradeTooLowException : public std::exception {
+        public:
+            const char* what() const throw();
     };
 
     Bureaucrat(int grade);
@@ -34,5 +39,8 @@ public:
     ~Bureaucrat();
     const std::string& getName() const;
     int getGrade() const;
+    void incrementGrade();
+    void decrementGrade();
 };
+std::ostream &operator<<(std::ostream &out, Bureaucrat const &source);
 
