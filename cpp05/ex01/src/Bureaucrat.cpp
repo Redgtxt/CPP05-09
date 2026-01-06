@@ -18,6 +18,22 @@ int Bureaucrat::getGrade() const
     return this->_grade;
 }
 
+
+void Bureaucrat::signForm(Form &form)
+{
+    try
+    {
+       form.beSigned(*this);
+       std::cout << *this << "signed the form" << std::endl;
+    }
+    catch(const std::exception& e)
+    {
+        std::cout << *this << "couldn't signed the following the form" << form << std::endl;
+        std::cout << e.what() << std::endl;
+    }
+    
+}
+
 Bureaucrat& Bureaucrat::operator=(const Bureaucrat& other)
 {
     std::cout << "Copy assignment Bureaucrat operator called" << std::endl;

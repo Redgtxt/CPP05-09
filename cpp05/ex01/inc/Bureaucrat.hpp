@@ -1,6 +1,6 @@
 #include <iostream>
 #include <exception>
-
+#include "Form.hpp"
 /*
     bureaucrat
     [x] const name
@@ -41,6 +41,8 @@ public:
     int getGrade() const;
     void incrementGrade();
     void decrementGrade();
+
+    void Bureaucrat::signForm(Form &form);
 };
 std::ostream &operator<<(std::ostream &out, Bureaucrat const &source);
 

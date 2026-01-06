@@ -6,7 +6,7 @@ SRCDIR = src
 INCDIR = inc
 OBJDIR = obj
 
-SRC = main.cpp  Bureaucrat.cpp
+SRC = main.cpp  Bureaucrat.cpp Form.cpp
 SRCS = $(addprefix $(SRCDIR)/,$(SRC))
 OBJS = $(addprefix $(OBJDIR)/,$(SRC:.cpp=.o))
 
