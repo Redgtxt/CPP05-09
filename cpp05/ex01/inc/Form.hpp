@@ -25,7 +25,7 @@ private
     (greater than or equal to the required one). Remember, grade 1 is higher than grade 2.
     If the grade is too low, throw a Form::GradeTooLowException.
 
-    []
+    [x]
     Then, add a signForm() member function in the Bureaucrat class. This function must
     call Form::beSigned() to attempt to sign the form. If the form is signed successfully, it
     will print something like:
@@ -41,8 +41,8 @@ class Form
 {
 private:
     const std::string _name;
-    bool _signed;
     const int _grade;
+    bool _signed;
     const int _executeGrade;
 public:
 
@@ -57,15 +57,15 @@ public:
     };
 
     Form();
-    Form(std::string& name, int grade,int executeGrade);
+    Form(const std::string& name, int grade,int executeGrade);
     Form(const Form &obj);
     Form& operator=(const Form& other);
     ~Form();
 
     void beSigned(Bureaucrat& z1);
     const std::string& getName() const;
-    const bool getSigned() const;
-    const int getGrade() const;
-    const int getExecuteGrade() const;
+    bool getSigned() const;
+    int getGrade() const;
+    int getExecuteGrade() const;
 };
 std::ostream &operator<<(std::ostream &out, Form const &source);

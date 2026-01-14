@@ -1,17 +1,18 @@
-#include "Bureaucrat.hpp"
+
+#include "Form.hpp"
 
 Bureaucrat::Bureaucrat(int grade) : _name("Unkowned") ,_grade(grade)
 {
-    std::cout << "Bureaucrat with name " << this->getName() <<" and grade " << this->getGrade() << std::endl;
+    std::cout << " Bureaucrat with name " << this->getName() <<" and grade " << this->getGrade() << std::endl;
 }
 
-Bureaucrat::Bureaucrat(std::string name,int grade) : _name(name) ,_grade(grade)
+Bureaucrat::Bureaucrat(const std::string& name,int grade) : _name(name) ,_grade(grade)
 {
     if(grade > 150)
         throw(GradeTooHighException());
     else if(grade < 1)
         throw(GradeTooLowException());
-    std::cout << "Bureaucrat with name " << this->getName() <<" and grade " << this->getGrade() << std::endl;
+    std::cout << " Bureaucrat with name " << this->getName() <<" and grade " << this->getGrade() << std::endl;
 }
 int Bureaucrat::getGrade() const
 {
@@ -57,7 +58,19 @@ const std::string& Bureaucrat::getName() const
     return this->_name;
 }
 
-
+void Bureaucrat::signForm(Form& form)
+{
+    try
+    {
+        form.beSigned(*this);
+    }
+    catch(const std::exception& e)
+    {
+       // std::cout << "Coudn't signed the form " << form.getName() << std::endl;
+        std::cout << this->getName() << " couldn’t sign " << form.getName() << " because " << e.what() << std::endl;
+    }
+    
+}
 
 //Exceptions
 const char* Bureaucrat::GradeTooHighException::what() const throw()

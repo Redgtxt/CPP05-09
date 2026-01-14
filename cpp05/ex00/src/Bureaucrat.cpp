@@ -5,7 +5,7 @@ Bureaucrat::Bureaucrat(int grade) : _name("Unkowned") ,_grade(grade)
     std::cout << "Bureaucrat with name " << this->getName() <<" and grade " << this->getGrade() << std::endl;
 }
 
-Bureaucrat::Bureaucrat(std::string name,int grade) : _name(name) ,_grade(grade)
+Bureaucrat::Bureaucrat(const std::string& name,int grade) : _name(name) ,_grade(grade)
 {
     if(grade > 150)
         throw(GradeTooHighException());

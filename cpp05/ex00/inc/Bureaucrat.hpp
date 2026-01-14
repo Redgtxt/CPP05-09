@@ -33,7 +33,7 @@ public:
     };
 
     Bureaucrat(int grade);
-    Bureaucrat(std::string name,int grade);
+    Bureaucrat(const std::string& name,int grade);
     Bureaucrat(const Bureaucrat &obj);
     Bureaucrat& operator=(const Bureaucrat& other);
     ~Bureaucrat();

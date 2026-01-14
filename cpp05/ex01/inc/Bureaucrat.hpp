@@ -1,6 +1,9 @@
+#pragma once
 #include <iostream>
 #include <exception>
-#include "Form.hpp"
+
+class Form;
+
 /*
     bureaucrat
     [x] const name
@@ -33,7 +36,7 @@ public:
     };
 
     Bureaucrat(int grade);
-    Bureaucrat(std::string name,int grade);
+    Bureaucrat(const std::string& name,int grade);
     Bureaucrat(const Bureaucrat &obj);
     Bureaucrat& operator=(const Bureaucrat& other);
     ~Bureaucrat();
@@ -41,8 +44,7 @@ public:
     int getGrade() const;
     void incrementGrade();
     void decrementGrade();
-
-    void Bureaucrat::signForm(Form &form);
+    void signForm(Form& form);
 };
 std::ostream &operator<<(std::ostream &out, Bureaucrat const &source);
 

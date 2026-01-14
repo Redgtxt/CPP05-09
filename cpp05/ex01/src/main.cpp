@@ -1,33 +1,48 @@
-#include "Bureaucrat.hpp"
- 
+#include "Form.hpp"
+
 int main()
 {
-    //Grade is to high
-    try {
-        Bureaucrat z1("Joe", 200);
-    } catch(const std::exception& e) {
-        std::cout << "Erro no z1: " << e.what() << std::endl;
-    }
+	std::cout << "\n===== Form success tests =====\n"
+			  << std::endl;
 
-    // Grade is to low
-    try {
-        Bureaucrat z2("Joe", -1);
-    } catch(const std::exception& e) {
-        std::cout << "Erro no z2: " << e.what() << std::endl;
-    }
+	try
+	{
+		Form success("Success", 50, 10);
+		Bureaucrat joao("Joao", 3);
 
-    //Increment funcion
-    try
-    {   
-        Bureaucrat dummy("Dummy",134);
-        dummy.decrementGrade();
-        std::cout << dummy;
-    }
-    catch(const std::exception& e)
-    {
-        std::cout << e.what() << '\n';
-    }
-    
+		joao.signForm(success);
+	}
+	catch (const std::exception &e)
+	{
+		std::cerr << e.what() << '\n';
+	}
 
-    
+	std::cout << "\n===== Form Exception tests =====\n"
+			  << std::endl;
+	try
+	{
+
+		Form test("A normal form", 50, 10);
+		Bureaucrat testfail("Failing", 100);
+
+		std::cout << test;
+
+		testfail.signForm(test);
+	}
+	catch (const std::exception &e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
+
+	std::cout << "\n===== Form grade too low tests =====\n"
+			  << std::endl;
+
+	try
+	{
+		Form fail("fail", 200, 10);
+	}
+	catch (const std::exception &e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
 }
