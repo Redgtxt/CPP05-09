@@ -35,6 +35,7 @@ public:
             const char* what() const throw();
     };
 
+    Bureaucrat(void);
     Bureaucrat(int grade);
     Bureaucrat(const std::string& name,int grade);
     Bureaucrat(const Bureaucrat &obj);

@@ -17,6 +17,7 @@ ScalarConverter& ScalarConverter::operator=(const ScalarConverter& other)
     return *this;
 }
 
+
 ScalarConverter::ScalarConverter(const ScalarConverter &obj)
 {
     std::cout << "ScalarConverter Copy constructor called" << std::endl;
@@ -88,49 +89,77 @@ int ScalarConverter::CheckPositionofSign(int sign,char symbol,const std::string 
     }
     return 0;
 }
+/*
+    Vou averiguar es tenhos os sinais todos bonitinhos
+*/
+int ScalarConverter::CleanNumber(const std::string &str)
+{
+    int plusSignAmount = CountSign('+', str);
+    int subSignAmount = CountSign('-', str);
+
+    if (plusSignAmount == -1 || subSignAmount == -1)
+        throw ScalarError(ScalarError::TooManySigns);
+
+    if (CheckPositionofSign(plusSignAmount, '+', str) ||
+        CheckPositionofSign(subSignAmount, '-', str))
+        throw ScalarError(ScalarError::InvalidSignPosition);
+
+    return 0;
+}
+
+bool OnlyDigits(const std::string& str) {
+
+    if (str.empty()) {
+        return false;
+    }
+
+    for (std::string::size_type i = 0; i < str.length(); ++i) {
+        if (!isdigit(static_cast<unsigned char>(str[i]))) {
+            return false; // Encontrou algo que não e digito
+        }
+    }
+    return true; // Percorreu tudo e so achou dígitos
+}
 
 int ScalarConverter::IndentifyType(const std::string &str)
 {
 
-    int plusSignAmount = CountSign('+',str);
-    int subSignAmount = CountSign('-',str);
-
-    if(plusSignAmount == -1 || subSignAmount == -1)
-    {
-        std::cout << "Tenho mais do que um sinal" << std::endl;
+    if(CleanNumber(str))
         return -1;
-    }
-
-    //Verifico se o sinal esta na primeira posiçao
-    if(CheckPositionofSign(plusSignAmount,'+',str) || CheckPositionofSign(subSignAmount,'-',str) )
-    {
-        return -1;
-    }
-
-    //Agora que os sinais ja estao tratados, so falta ver o tipo
     
+    //Agora que os sinais ja estao tratados, so falta ver o tipo
+    if(OnlyDigits(str))
+    {
+
+    }
     return 0;
 }
 
  void ScalarConverter::converter(const std::string& input)
 {
-    std::cout << input << std::endl;
+    if (input.empty())
+        throw ScalarError(ScalarError::EmptyInput);
 
-    //Input nao esta vazio FIXE
-    if(!input.empty())
-    {
-        int ret = IndentifyType(input);
-        std::cout << "Value of ret: " << ret << std::endl; 
-        if(ret == -1)
-        {
-            std::cout << "Saindo do programa por ERRO" << std::endl;
-            return ;
-        }
-    }
+    CleanNumber(input);
+    // ...restante validação/conversão...
 }
 
 ScalarConverter::~ScalarConverter()
 {
     std::cout << "Bum destructor called" << std::endl;
+}
+
+ScalarConverter::ScalarError::ScalarError(Type type) : _type(type) {}
+
+const char* ScalarConverter::ScalarError::what() const throw()
+{
+    switch (_type)
+    {
+        case EmptyInput:          return "Erro: input vazio.";
+        case TooManySigns:        return "Erro: mais de um sinal (+/-).";
+        case InvalidSignPosition: return "Erro: sinal só pode estar na primeira posição.";
+        case InvalidLiteral:      return "Erro: literal inválido.";
+        default:                  return "Erro desconhecido.";
+    }
 }
 

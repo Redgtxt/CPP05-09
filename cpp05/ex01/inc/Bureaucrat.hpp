@@ -35,11 +35,12 @@ public:
             const char* what() const throw();
     };
 
-    Bureaucrat(int grade);
+    Bureaucrat(void);
     Bureaucrat(const std::string& name,int grade);
     Bureaucrat(const Bureaucrat &obj);
     Bureaucrat& operator=(const Bureaucrat& other);
     ~Bureaucrat();
+    
     const std::string& getName() const;
     int getGrade() const;
     void incrementGrade();

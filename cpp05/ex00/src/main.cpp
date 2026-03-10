@@ -16,7 +16,7 @@ int main()
         std::cout << "Erro no z2: " << e.what() << std::endl;
     }
 
-    //Increment funcion
+    //Decrement funcion
     try
     {   
         Bureaucrat dummy("Dummy",134);
