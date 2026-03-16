@@ -75,6 +75,8 @@ int ScalarConverter::CountSign(char sign,const std::string &str)
 
     return contador;
 }
+
+
 int ScalarConverter::CheckPositionofSign(int sign,char symbol,const std::string &str)
 {
     if(sign)
@@ -96,6 +98,7 @@ int ScalarConverter::CleanNumber(const std::string &str)
 {
     int plusSignAmount = CountSign('+', str);
     int subSignAmount = CountSign('-', str);
+    int dotAmount = CountSign('.',str);
 
     if (plusSignAmount == -1 || subSignAmount == -1)
         throw ScalarError(ScalarError::TooManySigns);
@@ -118,7 +121,7 @@ bool OnlyDigits(const std::string& str) {
             return false; // Encontrou algo que não e digito
         }
     }
-    return true; // Percorreu tudo e so achou dígitos
+    return true; // Percorreu tudo e so achou digitos
 }
 
 int ScalarConverter::IndentifyType(const std::string &str)
@@ -130,7 +133,22 @@ int ScalarConverter::IndentifyType(const std::string &str)
     //Agora que os sinais ja estao tratados, so falta ver o tipo
     if(OnlyDigits(str))
     {
+        //Sou inteiro
+        
 
+        //Double
+        /*
+        
+        Um numero com . nao pode ter a sua virgula na primeira posicao ou na ultima
+        */
+        if(str.find('.') == 0 || str.find('.') == str.size())
+            return -1;
+
+        //Sou double
+        if(str.find('.'))
+        {
+            
+        }
     }
     return 0;
 }
