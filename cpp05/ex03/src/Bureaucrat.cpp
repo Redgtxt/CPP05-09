@@ -19,9 +19,9 @@ Bureaucrat::Bureaucrat(void) : _name("Unknown"), _grade(150)
 Bureaucrat::Bureaucrat(const std::string& name,int grade) : _name(name) ,_grade(grade)
 {
     if(grade > 150)
-        throw(GradeTooHighException());
-    else if(grade < 1)
         throw(GradeTooLowException());
+    else if(grade < 1)
+        throw(GradeTooHighException());
     std::cout << " Bureaucrat with name " << this->getName() <<" and grade " << this->getGrade() << std::endl;
 }
 
@@ -39,7 +39,6 @@ Bureaucrat& Bureaucrat::operator=(const Bureaucrat& other)
     {
         _grade = other.getGrade();
     }
-    
     return *this;
 }
 
@@ -67,7 +66,7 @@ void Bureaucrat::incrementGrade()
 
 void Bureaucrat::decrementGrade()
 {
-    if(_grade <= 150)
+    if(_grade >= 150)
         throw(GradeTooLowException());
     this->_grade++;
 }

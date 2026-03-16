@@ -1,18 +1,18 @@
 #include "Form.hpp"
 
-Form::Form() : _name("unknown"), _grade(150),_signed(false),_executeGrade(150)
+Form::Form() : _name("unknown"), _SignGrade(150),_signed(false),_executeGrade(150)
 {
 
-    std::cout << "Defautl Form constructor called";
+    std::cout << "Default Form constructor called";
 }
 
 
-Form::Form(const std::string& name, int grade,int executeGrade) : _name(name), _grade(grade),_signed(false),_executeGrade(executeGrade)
+Form::Form(const std::string& name, int grade,int executeGrade) : _name(name), _SignGrade(grade),_signed(false),_executeGrade(executeGrade)
 {
     if(grade > 150)
-        throw(GradeTooHighExeption());
-    if(grade < 1)
         throw(GradeTooLowExeption());
+    if(grade < 1)
+        throw(GradeTooHighExeption());
     std::cout << "Constructor called";
 }
 
@@ -24,7 +24,6 @@ Form& Form::operator=(const Form& other)
     {
         _signed = other.getSigned();
     }
-    
     return *this;
 }
 
@@ -37,7 +36,7 @@ const char* Form::GradeTooLowExeption::what() const throw()
 {
     return "Grade Too low";
 } 
-Form::Form(const Form &obj) : _name(obj.getName()),_grade(obj.getGrade()), _signed(obj.getSigned()),_executeGrade(obj.getExecuteGrade())
+Form::Form(const Form &obj) : _name(obj.getName()),_SignGrade(obj.getSignGrade()), _signed(obj.getSigned()),_executeGrade(obj.getExecuteGrade())
 {
     std::cout << "Form Copy constructor called" << std::endl;
     *this = obj;
@@ -48,7 +47,7 @@ Form::Form(const Form &obj) : _name(obj.getName()),_grade(obj.getGrade()), _sign
 void Form::beSigned(Bureaucrat& z1)
 {
     
-    if(z1.getGrade() <= this->_executeGrade)
+    if(z1.getGrade() <= this->_SignGrade)
     {
         this->_signed = true;
         std::cout << "Form is now signed, status: " << this->getSigned() << std::endl;
@@ -66,8 +65,8 @@ bool Form::getSigned() const{
     return _signed;
 }
 
-int Form::getGrade() const{
-    return _grade;
+int Form::getSignGrade() const{
+    return _SignGrade;
 }
 
 int Form::getExecuteGrade() const{
@@ -76,7 +75,7 @@ int Form::getExecuteGrade() const{
 
 std::ostream &operator<<(std::ostream &out, Form const &source)
 {
-	out << source.getName() << " , Form grade " << source.getGrade() << "is it signed: " << source.getSigned() << " ExecuteGrade " << source.getExecuteGrade() << std::endl;
+	out << source.getName() << ", Form grade " << source.getSignGrade() << "is it signed: " << source.getSigned() << " ExecuteGrade " << source.getExecuteGrade() << std::endl;
 	return (out);
 }
 

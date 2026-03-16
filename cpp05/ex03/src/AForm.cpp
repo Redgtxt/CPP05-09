@@ -1,13 +1,13 @@
 #include "AForm.hpp"
 
-AForm::AForm() : _name("unknown"), _grade(150),_signed(false),_executeGrade(150)
+AForm::AForm() : _name("unknown"), _signGrade(150),_signed(false),_executeGrade(150)
 {
 
     std::cout << "Defautl Form constructor called";
 }
 
 
-AForm::AForm(const std::string& name, int grade,int executeGrade) : _name(name), _grade(grade),_signed(false),_executeGrade(executeGrade)
+AForm::AForm(const std::string& name, int grade,int executeGrade) : _name(name), _signGrade(grade),_signed(false),_executeGrade(executeGrade)
 {
     if(grade > 150)
         throw(GradeTooHighExeption());
@@ -43,7 +43,7 @@ const char* AForm::FormNotSignedExeption::what() const throw()
     return "Form not signed";
 } 
 
-AForm::AForm(const AForm &obj) : _name(obj.getName()),_grade(obj.getGrade()), _signed(obj.getSigned()),_executeGrade(obj.getExecuteGrade())
+AForm::AForm(const AForm &obj) : _name(obj.getName()),_signGrade(obj.getSignGrade()), _signed(obj.getSigned()),_executeGrade(obj.getExecuteGrade())
 {
     std::cout << "Form Copy constructor called" << std::endl;
     *this = obj;
@@ -51,7 +51,7 @@ AForm::AForm(const AForm &obj) : _name(obj.getName()),_grade(obj.getGrade()), _s
 
 void AForm::beSigned(Bureaucrat& z1)
 {
-    if(z1.getGrade() <= this->_grade)
+    if(z1.getGrade() <= this->_signGrade)
     {
         this->_signed = true;
         std::cout << "Form is now signed, status: " << this->getSigned() << std::endl;
@@ -74,8 +74,8 @@ bool AForm::getSigned() const{
     return _signed;
 }
 
-int AForm::getGrade() const{
-    return _grade;
+int AForm::getSignGrade() const{
+    return _signGrade;
 }
 
 int AForm::getExecuteGrade() const{
@@ -84,7 +84,7 @@ int AForm::getExecuteGrade() const{
 
 std::ostream &operator<<(std::ostream &out, AForm const &source)
 {
-	out << source.getName() << " , Form grade " << source.getGrade() << "is it signed: " << source.getSigned() << " ExecuteGrade " << source.getExecuteGrade() << std::endl;
+	out << source.getName() << " , Form grade " << source.getSignGrade() << "is it signed: " << source.getSigned() << " ExecuteGrade " << source.getExecuteGrade() << std::endl;
 	return (out);
 }
 

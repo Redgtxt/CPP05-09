@@ -44,7 +44,7 @@ class AForm
 {
 private:
     const std::string _name;
-    const int _grade;
+    const int _signGrade;
     bool _signed;
     const int _executeGrade;
 protected:
@@ -77,7 +77,7 @@ public:
     std::string getName() const;
     std::string getTarget() const;
     bool getSigned() const;
-    int getGrade() const;
+    int getSignGrade() const;
     int getExecuteGrade() const;
 };
 std::ostream &operator<<(std::ostream &out, AForm const &source);

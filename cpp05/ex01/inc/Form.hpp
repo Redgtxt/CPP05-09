@@ -41,7 +41,7 @@ class Form
 {
 private:
     const std::string _name;
-    const int _grade;
+    const int _SignGrade;
     bool _signed;
     const int _executeGrade;
 public:
@@ -57,7 +57,7 @@ public:
     };
 
     Form();
-    Form(const std::string& name, int grade,int executeGrade);
+    Form(const std::string& name, int _SignGrade,int executeGrade);
     Form(const Form &obj);
     Form& operator=(const Form& other);
     ~Form();
@@ -65,7 +65,7 @@ public:
     void beSigned(Bureaucrat& z1);
     const std::string& getName() const;
     bool getSigned() const;
-    int getGrade() const;
+    int getSignGrade() const;
     int getExecuteGrade() const;
 };
 std::ostream &operator<<(std::ostream &out, Form const &source);
