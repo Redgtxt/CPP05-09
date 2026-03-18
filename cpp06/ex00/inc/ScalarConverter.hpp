@@ -1,7 +1,16 @@
+#pragma once
 #include <iostream>
 #include <string>
 #include <exception>
 #include <cctype>
+
+enum    DataType
+{
+    FLOAT_TYPE,
+    DOUBLE_TYPE,
+    INT_TYPE,
+    CHAR_TYPE
+};
 
 class ScalarConverter
 {
@@ -12,8 +21,10 @@ private:
     static int IndentifyType(const std::string &str);
     static int CheckPositionofSign(int sign,char symbol,const std::string &str);
     static int CountSign(char Sign,const std::string &str);
-    static int CleanNumber(const std::string &str);
+    static void CleanNumber(const std::string &str);
     static bool OnlyDigits(const std::string& str);
+    static bool MyFind(char value, const std::string &str);
+
     ~ScalarConverter();
 
     class ScalarError : public std::exception
@@ -23,7 +34,8 @@ private:
             EmptyInput,
             TooManySigns,
             InvalidSignPosition,
-            InvalidLiteral
+            InvalidLiteral,
+            TooManyDots
         };
 
         explicit ScalarError(Type type);

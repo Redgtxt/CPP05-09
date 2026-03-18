@@ -94,7 +94,7 @@ int ScalarConverter::CheckPositionofSign(int sign,char symbol,const std::string 
 /*
     Vou averiguar es tenhos os sinais todos bonitinhos
 */
-int ScalarConverter::CleanNumber(const std::string &str)
+void ScalarConverter::CleanNumber(const std::string &str)
 {
     int plusSignAmount = CountSign('+', str);
     int subSignAmount = CountSign('-', str);
@@ -103,14 +103,15 @@ int ScalarConverter::CleanNumber(const std::string &str)
     if (plusSignAmount == -1 || subSignAmount == -1)
         throw ScalarError(ScalarError::TooManySigns);
 
+    if(dotAmount == -1)
+        throw ScalarError(ScalarError::TooManyDots);
+    
     if (CheckPositionofSign(plusSignAmount, '+', str) ||
         CheckPositionofSign(subSignAmount, '-', str))
         throw ScalarError(ScalarError::InvalidSignPosition);
-
-    return 0;
 }
 
-bool OnlyDigits(const std::string& str) {
+bool ScalarConverter::OnlyDigits(const std::string& str) {
 
     if (str.empty()) {
         return false;
@@ -124,33 +125,47 @@ bool OnlyDigits(const std::string& str) {
     return true; // Percorreu tudo e so achou digitos
 }
 
+/// @brief 
+/// @param value char that you want to check
+/// @param str str to find
+/// @return true in case the char is in the string, false if is not
+bool  ScalarConverter::MyFind(char value, const std::string &str)
+{
+    if(str.find(value) != std::string::npos)
+        return true;
+    return false;
+}
+
+
+/*
+NAO PODE PASSAR
+    20.
+    20.f
+*/
 int ScalarConverter::IndentifyType(const std::string &str)
 {
-
-    if(CleanNumber(str))
-        return -1;
+    CleanNumber(str);
     
-    //Agora que os sinais ja estao tratados, so falta ver o tipo
-    if(OnlyDigits(str))
+    // Verificar se é float (tem '.' e termina com 'f')
+    if(MyFind('.', str) && str.at(str.size() - 1) == 'f')
     {
-        //Sou inteiro
-        
-
-        //Double
-        /*
-        
-        Um numero com . nao pode ter a sua virgula na primeira posicao ou na ultima
-        */
-        if(str.find('.') == 0 || str.find('.') == str.size())
-            return -1;
-
-        //Sou double
-        if(str.find('.'))
-        {
-            
-        }
+        return FLOAT_TYPE; 
     }
-    return 0;
+    // Verificar se é double (tem '.' mas não termina com 'f')
+    else if(MyFind('.', str))
+    {
+        return DOUBLE_TYPE;
+    }
+    // Verificar se é int (apenas dígitos, sem '.')
+    else if(OnlyDigits(str))
+    {
+        return INT_TYPE;
+    }
+    // char
+    else 
+    {
+        return CHAR_TYPE;
+    }
 }
 
  void ScalarConverter::converter(const std::string& input)
@@ -158,8 +173,26 @@ int ScalarConverter::IndentifyType(const std::string &str)
     if (input.empty())
         throw ScalarError(ScalarError::EmptyInput);
 
-    CleanNumber(input);
-    // ...restante validação/conversão...
+    int ret = IndentifyType(input);
+    if(ret == -1)
+    {
+        std::cout << "Sai do converter" << std::endl;
+        return ;
+    }
+        switch (ret)
+    {
+        case FLOAT_TYPE: 
+        std::cout << "Sou um float" << std::endl;
+        break;
+        case DOUBLE_TYPE:        
+        std::cout << "Sou um double" << std::endl;
+        break;
+        case INT_TYPE:    
+        std::cout << "Sou um int" << std::endl;
+        break;
+        case CHAR_TYPE:   
+        std::cout << "Sou um char" << std::endl;
+    }    
 }
 
 ScalarConverter::~ScalarConverter()
@@ -177,6 +210,7 @@ const char* ScalarConverter::ScalarError::what() const throw()
         case TooManySigns:        return "Erro: mais de um sinal (+/-).";
         case InvalidSignPosition: return "Erro: sinal só pode estar na primeira posição.";
         case InvalidLiteral:      return "Erro: literal inválido.";
+        case TooManyDots:         return "Erro  mais de uma virgula (.).";
         default:                  return "Erro desconhecido.";
     }
 }
