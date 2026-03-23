@@ -141,31 +141,55 @@ bool  ScalarConverter::MyFind(char value, const std::string &str)
 NAO PODE PASSAR
     20.
     20.f
+    
 */
+//strtod
 int ScalarConverter::IndentifyType(const std::string &str)
 {
     CleanNumber(str);
     
-    // Verificar se é float (tem '.' e termina com 'f')
-    if(MyFind('.', str) && str.at(str.size() - 1) == 'f')
-    {
-        return FLOAT_TYPE; 
-    }
-    // Verificar se é double (tem '.' mas não termina com 'f')
-    else if(MyFind('.', str))
-    {
+    // pseudo-literals
+    if (str == "nanf" || str == "+inff" || str == "-inff")
+        return FLOAT_TYPE;
+    if (str == "nan" || str == "+inf" || str == "-inf")
         return DOUBLE_TYPE;
-    }
-    // Verificar se é int (apenas dígitos, sem '.')
-    else if(OnlyDigits(str))
+
+    
+    char *end = NULL;
+    double value = std::strtod(str.c_str(), &end);
+    
+    //caso nao seja double
+    (void)value; 
+
+    // Se o ponteiro não andou nada, não e um numero.
+    if (end == str.c_str())
     {
-        return INT_TYPE;
+        if (str.size() == 1)
+            return CHAR_TYPE;
+        return -1;
     }
-    // char
-    else 
+
+    // float
+    if (*end == 'f' && *(end + 1) == '\0'&& MyFind('.',str))
     {
-        return CHAR_TYPE;
+        return FLOAT_TYPE;
     }
+
+    // Verificar se é DOUBLE ou INT: chegou até o final da string (terminador nulo) sem erros
+    if (*end == '\0')
+    {
+        if (MyFind('.', str))
+        {
+            return DOUBLE_TYPE;
+        }
+        else 
+        {
+            return INT_TYPE;
+        }
+    }
+
+    // End apontou para outra coisa que nao e valida
+    return -1;
 }
 
  void ScalarConverter::converter(const std::string& input)

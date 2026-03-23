@@ -3,6 +3,8 @@
 #include <string>
 #include <exception>
 #include <cctype>
+#include <stdlib.h>
+
 
 enum    DataType
 {
