@@ -1,55 +1,48 @@
-#pragma once
+#ifndef SCALARCONVERTER_HPP
+#define SCALARCONVERTER_HPP
+
 #include <iostream>
 #include <string>
-#include <exception>
-#include <cctype>
-#include <stdlib.h>
+#include <cstdlib>
+#include <limits>
+#include <cmath>
+#include <iomanip>
 
+#define CHAR_TYPE 1
+#define INT_TYPE 2
+#define FLOAT_TYPE 3
+#define DOUBLE_TYPE 4
 
-enum    DataType
-{
-    FLOAT_TYPE,
-    DOUBLE_TYPE,
-    INT_TYPE,
-    CHAR_TYPE
-};
-
-class ScalarConverter
-{
+class ScalarConverter {
 private:
-    ScalarConverter(void);
+    
+    ScalarConverter();
     ScalarConverter(const ScalarConverter &obj);
     ScalarConverter& operator=(const ScalarConverter& other);
-    static int IndentifyType(const std::string &str);
-    static int CheckPositionofSign(int sign,char symbol,const std::string &str);
-    static int CountSign(char Sign,const std::string &str);
+    ~ScalarConverter();
+
+
+    static int CountSign(char sign, const std::string &str);
+    static int CheckPositionofSign(int sign, char symbol, const std::string &str);
     static void CleanNumber(const std::string &str);
     static bool OnlyDigits(const std::string& str);
     static bool MyFind(char value, const std::string &str);
+    static int IndentifyType(const std::string &str);
 
-    ~ScalarConverter();
+    static void printValues(char c, int i, float f, double d, bool isImpossible, bool isCharImpossible);
 
-    class ScalarError : public std::exception
-    {
+public:
+    class ScalarError : public std::exception {
     public:
-        enum Type {
-            EmptyInput,
-            TooManySigns,
-            InvalidSignPosition,
-            InvalidLiteral,
-            TooManyDots
-        };
-
-        explicit ScalarError(Type type);
-        const char* what() const throw();
-
+        enum Type { EmptyInput, TooManySigns, InvalidSignPosition, InvalidLiteral, TooManyDots };
+        ScalarError(Type type);
+        virtual const char* what() const throw();
     private:
         Type _type;
     };
 
-public:
-    static void converter(const std::string& input);
 
+    static void convert(const std::string& input);
 };
 
-
+#endif

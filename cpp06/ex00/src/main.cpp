@@ -9,7 +9,7 @@ int main(int argc,char *argv[])
     }
     try
     {
-        ScalarConverter::converter(argv[1]);
+        ScalarConverter::convert(argv[1]);
     }
     catch(const std::exception& e)
     {
