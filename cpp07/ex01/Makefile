@@ -1,12 +1,12 @@
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
-NAME = ex00
+NAME = ex01
 
 SRCDIR = src
 INCDIR = inc
 OBJDIR = obj
 
-SRC = main.cpp  
+SRC = main.cpp
 SRCS = $(addprefix $(SRCDIR)/,$(SRC))
 OBJS = $(addprefix $(OBJDIR)/,$(SRC:.cpp=.o))
 
