@@ -3,10 +3,12 @@
 
 Span::Span() : _n(0)
 {
+    std::cout << "Default constructor without parameters called" << std::endl;
 }
 
 Span::Span(unsigned int size) : _n(size)
 {
+    std::cout << "Constructor with parameters called" << std::endl;
 }
 
 Span::Span(const Span &obj)
@@ -22,6 +24,7 @@ Span& Span::operator=(const Span& other)
     if(this != &other)
     {
         _n = other.getN();
+        _vec = other._vec;
     }
     return *this;
 }
@@ -50,27 +53,31 @@ const char* Span::ToSmall::what() const throw()
 
 void Span::printVec()
 {
-    for(size_t i = 0;i < this->_span.size();i++)
-        std::cout << this->_span[i] << " ";
 
+    std::cout << "--- Printing the vec ---" << std::endl;
+    for(size_t i = 0;i < this->_vec.size();i++)
+        std::cout << this->_vec[i] << " ";
+    std::cout << "\n";
 }
 
 long Span::logestSpan()
 {
-    if(2 > this->_span.size())
+    if(2 > this->_vec.size())
         throw (Span::ToSmall());
-    return *std::max_element(this->_span.begin(),this->_span.end() - *std::min_element(this->_span.begin(),this->_span.end()));
+    long minElement = *std::min_element(this->_vec.begin(), this->_vec.end());
+    long maxElement = *std::max_element(this->_vec.begin(), this->_vec.end());
+    return maxElement - minElement;
 }
 long Span::shortestSpan()
 {
-    if(2 > this->_span.size())
+    if(2 > this->_vec.size())
         throw (Span::ToSmall());
     long shortest = INT_MAX;
 
-    std::vector<int> sortedVec = this->_span;
+    std::vector<int> sortedVec = this->_vec;
     std::sort(sortedVec.begin(),sortedVec.end());
 
-    for (size_t i = 0; i < sortedVec.size(); i++)
+    for (size_t i = 1; i < sortedVec.size(); i++)
     {
         if(sortedVec[i] - sortedVec[i - 1] < shortest)
             shortest = sortedVec[i] - sortedVec[i - 1];
@@ -80,16 +87,16 @@ long Span::shortestSpan()
 }
 void Span::addNumber(unsigned int num)
 {
-    if(this->_span.size() > this->_n)
+    if(this->_vec.size() >= this->_n)
         throw(OffLimits());
-    this->_span.push_back(num);
+    this->_vec.push_back(num);
 }
 
 void Span::addRange(std::vector<int>::iterator begin, std::vector<int>::iterator end)
 {
-    if(this->_span.size() + std::distance(begin,end) > this->_n)
+    if(this->_vec.size() + std::distance(begin,end) > this->_n)
         throw(OffLimits());
-    this->_span.insert(_span.end(),begin,end);
+    this->_vec.insert(_vec.end(),begin,end);
 }
 
 unsigned int Span::getN() const
@@ -99,4 +106,5 @@ unsigned int Span::getN() const
 
 Span::~Span()
 {
+    std::cout << "Destructor called bye bye" << std::endl;
 }

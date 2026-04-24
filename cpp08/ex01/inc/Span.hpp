@@ -8,7 +8,7 @@ class Span
 {
 private:
     unsigned int _n;//Size que o vector pode ter
-    std::vector<int> _span;
+    std::vector<int> _vec;
 public:
     class OffLimits : public std::exception {
         public:
