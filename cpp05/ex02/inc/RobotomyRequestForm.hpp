@@ -1,4 +1,6 @@
-#pragma once
+#ifndef ROBOTOMYREQUESTFORM_HPP
+#define ROBOTOMYREQUESTFORM_HPP
+
 #include "AForm.hpp"
 
 /*
@@ -19,6 +21,6 @@ public:
     void execute(Bureaucrat const & executor) const;
     ~RobotomyRequestForm();
 };
-
+#endif
 
 

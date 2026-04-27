@@ -1,4 +1,6 @@
-#pragma once
+#ifndef SHRUBBERYCREATIONFORM_HPP
+#define SHRUBBERYCREATIONFORM_HPP
+
 #include "AForm.hpp"
 
 /*
@@ -18,3 +20,4 @@ public:
     void execute(Bureaucrat const & executor) const;
     ~ShrubberyCreationForm();
 };
+#endif

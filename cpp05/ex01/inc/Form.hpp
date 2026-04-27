@@ -1,3 +1,5 @@
+#ifndef FORM_HPP
+#define FORM_HPP
 #include <iostream>
 #include "Bureaucrat.hpp"
 
@@ -69,3 +71,4 @@ public:
     int getExecuteGrade() const;
 };
 std::ostream &operator<<(std::ostream &out, Form const &source);
+#endif

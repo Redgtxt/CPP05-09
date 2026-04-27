@@ -1,20 +1,9 @@
+#ifndef BUREAUCRAT_HPP
+#define BUREAUCRAT_HPP
+
 #include <iostream>
 #include <exception>
 
-/*
-    bureaucrat
-    [x] const name
-    [X] grade range 1-150
-        1 e o valor mais alto
-        150 o mais baixo
-
-    [x]getName()
-    [x]getGrade()
-    [x]funcao que incrementa a grade de um bureaucrat
-    [x]funcao que decremente a grade de um bureaucrat
-
-    [x] ovrload << que printe <name>, bureaucrat grade <grade>.
-*/
 
 class Bureaucrat
 {
@@ -36,6 +25,7 @@ public:
     Bureaucrat(const Bureaucrat &obj);
     Bureaucrat& operator=(const Bureaucrat& other);
     ~Bureaucrat();
+    
     const std::string& getName() const;
     int getGrade() const;
     void incrementGrade();
@@ -43,3 +33,4 @@ public:
 };
 std::ostream &operator<<(std::ostream &out, Bureaucrat const &source);
 
+#endif

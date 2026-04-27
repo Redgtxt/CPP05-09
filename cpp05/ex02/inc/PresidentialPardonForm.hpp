@@ -1,10 +1,6 @@
-#pragma once
+#ifndef PRESIDENTIALPARDONFORM_HPP
+#define PRESIDENTIALPARDONFORM_HPP
 #include "AForm.hpp"
-
-/*
-PresidentialPardonForm: Required grades: sign 25, exec 5
-Informs that <target> has been pardoned by Zaphod Beeblebrox
-*/
 
 class PresidentialPardonForm : public AForm
 {
@@ -19,3 +15,4 @@ public:
 };
 
 
+#endif

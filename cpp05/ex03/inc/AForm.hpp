@@ -1,4 +1,6 @@
-#pragma once
+#ifndef AFORM_HPP
+#define AFORM_HPP
+
 #include <iostream>
 #include <fstream>
 
@@ -83,3 +85,4 @@ public:
 std::ostream &operator<<(std::ostream &out, AForm const &source);
 
 #include "Bureaucrat.hpp"
+#endif

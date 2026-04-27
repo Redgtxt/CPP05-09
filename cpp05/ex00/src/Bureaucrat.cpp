@@ -12,7 +12,6 @@ const char* Bureaucrat::GradeTooLowException::what() const throw()
 }
 
 
-
 Bureaucrat::Bureaucrat(void) : _name("Unknown"), _grade(150)
 {
     std::cout << "Bureaucrat Default constructor called" << std::endl;

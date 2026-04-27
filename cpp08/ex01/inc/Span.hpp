@@ -19,6 +19,7 @@ public:
         public:
             const char* what() const throw();
     };
+    
     Span();
     Span(unsigned int size);
     Span(const Span &obj);

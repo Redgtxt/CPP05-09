@@ -1,4 +1,6 @@
-#pragma once
+#ifndef INTERN
+#define INTERN
+
 #include <iostream>
 #include "AForm.hpp"
 #include "PresidentialPardonForm.hpp"
@@ -16,3 +18,5 @@ public:
     ~Intern();
     AForm *makeForm(std::string& name_form, std::string& target_form) const;
 };
+
+#endif
