@@ -84,7 +84,7 @@ int AForm::getExecuteGrade() const{
 
 std::ostream &operator<<(std::ostream &out, AForm const &source)
 {
-	out << source.getName() << " , Form grade " << source.getSignGrade() << "is it signed: " << source.getSigned() << " ExecuteGrade " << source.getExecuteGrade() << std::endl;
+	out << source.getName() << " , Form grade " << source.getSignGrade() << " is it signed: " << source.getSigned() << " ExecuteGrade " << source.getExecuteGrade() << std::endl;
 	return (out);
 }
 

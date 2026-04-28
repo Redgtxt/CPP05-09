@@ -15,9 +15,7 @@ void testInternMakeForm()
 
     // Test 1: Criar RobotomyRequestForm (exemplo do subject)
     std::cout << "\n--- Test 1: Criar RobotomyRequestForm ---" << std::endl;
-    std::string formName1 = "Robotomy Request";
-    std::string target1 = "Bender";
-    form = someRandomIntern.makeForm(formName1, target1);
+    form = someRandomIntern.makeForm("Robotomy Request", "Bender");
     if (form)
     {
         std::cout << "Form created: " << form->getName() << " with target: " << form->getTarget() << std::endl;
@@ -28,7 +26,7 @@ void testInternMakeForm()
     std::cout << "\n--- Test 2: Criar ShrubberyCreationForm ---" << std::endl;
     std::string formName2 = "Shrubbery Creation";
     std::string target2 = "garden";
-    form = someRandomIntern.makeForm(formName2, target2);
+    form = someRandomIntern.makeForm("Shrubbery Creation", target2);
     if (form)
     {
         std::cout << "Form created: " << form->getName() << " with target: " << form->getTarget() << std::endl;
@@ -107,6 +105,8 @@ void testInternWithBureaucrat()
     std::string formName3 = "Shrubbery Creation";
     std::string target3 = "office";
     form = intern.makeForm(formName3, target3);
+
+
 
     if (form)
     {

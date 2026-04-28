@@ -11,8 +11,6 @@ const char* Bureaucrat::GradeTooLowException::what() const throw()
     return "Grade is too low!";
 }
 
-
-
 Bureaucrat::Bureaucrat(void) : _name("Unknown"), _grade(150)
 {
     std::cout << "Bureaucrat Default constructor called" << std::endl;
@@ -51,7 +49,7 @@ Bureaucrat::~Bureaucrat()
 
 int Bureaucrat::getGrade() const
 {
-    return this->_grade;
+    return _grade;
 }
 
 const std::string& Bureaucrat::getName() const
@@ -90,6 +88,6 @@ void Bureaucrat::signForm(Form &form)
 
 std::ostream &operator<<(std::ostream &out, Bureaucrat const &source)
 {
-	out << source.getName() << ", bureaucrat grade " << source.getGrade();
+	out << source.getName() << ", bureaucrat grade " << source.getGrade() << std::endl;
 	return (out);
 }

@@ -16,7 +16,7 @@ public:
     Intern(Intern const &obj);
     Intern& operator=(Intern const &other);
     ~Intern();
-    AForm *makeForm(std::string& name_form, std::string& target_form) const;
+    AForm *makeForm(const std::string& name_form,  const std::string& target_form) const;
 };
 
 #endif

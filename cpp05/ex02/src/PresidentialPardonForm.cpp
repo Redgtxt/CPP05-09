@@ -5,7 +5,7 @@ PresidentialPardonForm::PresidentialPardonForm(void) : AForm("PresidentialPardon
     std::cout << "Default PresidentialPardonForm called without target" << std::endl;
 }
 
-PresidentialPardonForm::PresidentialPardonForm(std::string& Target) : AForm("PresidentialPardonForm",25,5)
+PresidentialPardonForm::PresidentialPardonForm(const std::string& Target) : AForm("PresidentialPardonForm",25,5)
 {
     target = Target;
     std::cout << "Constructor of PresidentialPardonForm with target: " << getTarget() << " created"  << std::endl;

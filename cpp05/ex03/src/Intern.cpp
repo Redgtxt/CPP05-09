@@ -23,7 +23,7 @@ Intern::~Intern()
     std::cout << "Intern destructor called" << std::endl;
 }
 
-AForm *Intern::makeForm(std::string& name_form, std::string& target_form) const
+AForm *Intern::makeForm(const std::string& name_form, const std::string& target_form) const
 {
     std::string forms[] = {"Shrubbery Creation", "Robotomy Request", "Presidential Pardon"};
     

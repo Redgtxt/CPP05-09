@@ -8,7 +8,7 @@ RobotomyRequestForm::RobotomyRequestForm(void) : AForm("RobotomyRequestForm",72,
     std::cout << "Default RobotomyRequestForm called without target" << std::endl;
 }
 
-RobotomyRequestForm::RobotomyRequestForm(std::string& Target) : AForm("RobotomyRequestForm",72,45)
+RobotomyRequestForm::RobotomyRequestForm(const std::string& Target) : AForm("RobotomyRequestForm",72,45)
 {
     target = Target;
     std::cout << "Constructor of RobotomyRequestForm with target: " << getTarget() << " created"  << std::endl;

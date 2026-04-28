@@ -2,14 +2,21 @@
  
 int main()
 {
-    //Grade is to high
+    //Grade is to low
+    /*
+    150 is the lowest grade so It will go to the catch
+    */
     try {
         Bureaucrat z1("Joe", 200);
     } catch(const std::exception& e) {
         std::cout << "Erro no z1: " << e.what() << std::endl;
     }
 
-    // Grade is to low
+    // Grade is to high
+
+    /*
+    1 is the highest grade so It will go to the catch
+    */
     try {
         Bureaucrat z2("Joe", -1);
     } catch(const std::exception& e) {

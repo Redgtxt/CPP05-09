@@ -48,7 +48,18 @@ void testRobotomyRequestForm()
         Bureaucrat alice("Alice", 40);
         Bureaucrat lowGrade("LowGuy", 100);
         RobotomyRequestForm robot(target);
+        Bureaucrat God("God", 1);
 
+        for(int i = 0; i < 50; i ++)
+        {
+        std::string target = "Xuxu";
+
+        RobotomyRequestForm xuxu(target);
+        xuxu.beSigned(God);
+        xuxu.execute(God);
+             
+
+        }
         std::cout << "\n--- Test 1: Executar sem assinar ---" << std::endl;
         alice.executeForm(robot);
 

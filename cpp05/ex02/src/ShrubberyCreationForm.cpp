@@ -5,7 +5,7 @@ ShrubberyCreationForm::ShrubberyCreationForm(void) : AForm("ShrubberyCreationFor
     std::cout << "Default ShrubberyCreationForm called without target" << std::endl;
 }
 
-ShrubberyCreationForm::ShrubberyCreationForm(std::string& Target) : AForm("ShrubberyCreationForm",145,137)
+ShrubberyCreationForm::ShrubberyCreationForm(const std::string& Target) : AForm("ShrubberyCreationForm",145,137)
 {
     target = Target;
     std::cout << "Constructor of ShrubberyCreationForm with target: " << getTarget() << " created"  << std::endl;
