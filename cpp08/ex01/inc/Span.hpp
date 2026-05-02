@@ -24,6 +24,8 @@ public:
     Span(unsigned int size);
     Span(const Span &obj);
     Span& operator=(const Span& other);
+
+
     unsigned int getN() const;
 
 
@@ -32,6 +34,8 @@ public:
     void addNumber(unsigned int num);
     void addRange(std::vector<int>::iterator begin, std::vector<int>::iterator end);
     void printVec();
+
+    
     ~Span();
 };
 

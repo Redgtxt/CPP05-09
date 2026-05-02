@@ -45,8 +45,10 @@ int ScalarConverter::CountSign(char sign, const std::string &str)
 int ScalarConverter::CheckPositionofSign(int sign, char symbol, const std::string &str)
 {
     if(sign) {
-        if(str.find(symbol) == 0) return 0;
-        else return -1;
+        if(str.find(symbol) == 0)
+            return 0;
+        else 
+            return -1;
     }
     return 0;
 }
