@@ -14,6 +14,15 @@ It takes a pointer and converts it to the unsigned integer type uintptr_t.
 */
 
 /*
+
+                Unitptr
+    unitpr e um data type do tipo inteiro mas precisamente unsigned int usado 
+    para armazenar ponteiros
+            
+
+    
+                Cast
+
     static_cast:
     usado para fazer conversoes seguras entre data types ou classes
 
@@ -32,15 +41,14 @@ class Serializer
 {
 private:   
     Serializer();
-    Serializer& operator=(const Serializer& other);
     Serializer(const Serializer &obj);
+    Serializer& operator=(const Serializer& other);
     ~Serializer();
-
-public:
-    uintptr_t serialize(Data* ptr);
-
+    
+    public:
+    static uintptr_t serialize(Data* ptr);
     //It takes an unsigned integer parameter and converts it to a pointer to Data.
-    Data* deserialize(uintptr_t raw);
+    static Data* deserialize(uintptr_t raw);
 };
 
 
