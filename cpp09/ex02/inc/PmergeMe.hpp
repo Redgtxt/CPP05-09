@@ -6,29 +6,9 @@
 #include <iostream>
 #include <ctype.h>
 #include <limits>
-
-
-/*
-int PmergeMe::Jacobsthal(int n)
-
-{
-
-    if(n == 0)
-
-        return 0;
-
-       
-
-    if(n == 1)
-
-        return 1;
-
-   
-
-    return Jacobsthal(n - 1) + 2 * Jacobsthal(n - 2);
-
-}
-*/
+#include <exception>
+#include <cstdlib>
+#include <sys/time.h>
 
 
 struct MyPair
@@ -42,6 +22,7 @@ class PmergeMe
 {
 private:
     std::vector<int> nums; 
+    size_t comparisonsCount;
 public:
     PmergeMe();
     ~PmergeMe();
@@ -63,8 +44,18 @@ public:
     void  createPairs(size_t init,std::vector<int>&nums,std::vector<MyPair>&pares,int &last);
 
     void DoPmergeMe();
-};
 
+    class PmergeMeError : public std::exception {
+    public:
+        enum Type { EmptyInput, NegativeNumber, InvalidLiteral, Digits };
+        PmergeMeError(Type type);
+        virtual const char* what() const throw();
+    private:
+        Type _type;
+    };
+    
+};
+unsigned long	timer(void);
 /*
 
 ATTENCION HUGO FUTURO:
@@ -72,15 +63,38 @@ Talvez seja inteligente passar a funcao que printa um vector para uma template q
 
 */
 
+unsigned long	timer(void)
+{
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return ((tv.tv_sec * 1000000) + (tv.tv_usec));
+}
 
 
-PmergeMe::PmergeMe()
+
+PmergeMe::PmergeMe() : comparisonsCount(0)
 {
 }
 
 PmergeMe::~PmergeMe()
 {
 }
+
+
+PmergeMe::PmergeMeError::PmergeMeError(Type type) : _type(type) {}
+
+const char* PmergeMe::PmergeMeError::what() const throw()
+{
+    switch (_type) {
+        case EmptyInput:          return "Error: input empty.";
+        case NegativeNumber:      return "Error: Negative Number";
+        case InvalidLiteral:      return "Error: literal invalid.";
+        case Digits:              return "Error: should only be digits";
+        default:                  return "Error Unknowned.";
+    }
+}
+
 
 
 void PmergeMe::printVec(const std::vector<int>& vec)
@@ -110,20 +124,23 @@ void PmergeMe::sortA(std::vector<MyPair>& vec)
     size_t j = 0;
     size_t k = 0;
 
-    // Fusão: compara o maior elemento de cada par e intercala por ordem crescente
+    // compara o maior elemento de cada par e intercala por ordem crescente
     while (i < left.size() && j < right.size())
     {
+        this->comparisonsCount++;
+
+
         if (left[i].a <= right[j].a)
             vec[k++] = left[i++];
         else
             vec[k++] = right[j++];
     }
 
-    // Copia os elementos restantes da metade esquerda (se houver)
+    // Copia os elementos restantes da metade esquerda
     while (i < left.size())
         vec[k++] = left[i++];
 
-    // Copia os elementos restantes da metade direita (se houver)
+    // Copia os elementos restantes da metade direita 
     while (j < right.size())
         vec[k++] = right[j++];
 }
@@ -151,20 +168,31 @@ bool PmergeMe::populateVector(char *argv[])
     //Percorre argv para salvar os valores dentro do vector
     while (argv[i])
     {
-        //vamos verificar se e um numero
-        for (size_t j = 0; argv[i][j]; j++) {
+        if (!argv[i][0])
+            throw PmergeMeError(PmergeMeError::EmptyInput);
+
+        // rejeita '-' explicitamente (e permite '+' opcional)
+        size_t j = 0;
+        if (argv[i][0] == '-')
+            throw PmergeMeError(PmergeMeError::NegativeNumber);
+        if (argv[i][0] == '+')
+            j = 1;
+
+        //vamos verificar se e um numero (so digitos)
+        for (; argv[i][j]; j++)
+        {
             if (!isdigit((unsigned char)argv[i][j]))
-                return false;
+                throw PmergeMeError(PmergeMeError::Digits);
         }
 
-        long num = std::atol(argv[i]);
-
-        // Verifica se é negativo
-        if (num < 0)
-            return false;
+        long num = std::strtol(argv[i], NULL, 10);
 
         // Verifica overflow de int
         if (num > std::numeric_limits<int>::max())
+            throw PmergeMeError(PmergeMeError::InvalidLiteral);
+
+        ///Verifica duplicados
+        if (std::find(nums.begin(), nums.end(), (int)num) != nums.end())
             return false;
 
         nums.push_back((int)num);
@@ -186,6 +214,8 @@ void  PmergeMe::createPairs(size_t init,std::vector<int>&nums,std::vector<MyPair
         return;
     }
     
+    this->comparisonsCount++;
+
     if(nums[init] > nums[init + 1])
     {
         newPar.b = nums[init + 1];
@@ -214,7 +244,7 @@ std::vector<int> PmergeMe::buildJacobsthalSequence(int size_pendentes)
     0, 1, 1, 3, 5, 11, 21
 
     0,1,1,3
-    2x1 + 1=3
+    2x1 + 1=  3
     1x2 + 3 = 5
     3x2 + 5 = 11
     5x2 + 11 = 21
@@ -227,8 +257,8 @@ std::vector<int> PmergeMe::buildJacobsthalSequence(int size_pendentes)
         jacobSeq.push_back(nextJacob);
         
         // Se o numero de Jacobsthal já e maior que o numero de pendentes que temos,
-        // não precisamos de calcular mais nenhum!
-        if (nextJacob >= size_pendentes)
+        // nao precisamos de calcular mais nenhum!
+        if (nextJacob >= size_pendentes + 1)
             break;
             
         i++;
@@ -250,6 +280,9 @@ int PmergeMe::binarySearchPosition(const std::vector<int>& mainChain, int target
         //li que isto ajuda a nao dar overflow com sequencias gigantes
         int mid = low + (high - low) / 2;
 
+        this->comparisonsCount++;
+
+
         if (mainChain[mid] < target)
         {
             // Se o alvo e MAIOR que o meio, ignoramos a metade esquerda
@@ -259,11 +292,6 @@ int PmergeMe::binarySearchPosition(const std::vector<int>& mainChain, int target
         {
             // Se o alvo e MENOR que o meio, ignoramos a metade direita
             high = mid - 1;
-        }
-        else
-        {
-            //Numero e igual vamos coloca lo a seguir
-            return mid; 
         }
     }
 
@@ -327,6 +355,7 @@ void PmergeMe::DoPmergeMe()
     // O numero maximo real de Bs que temos na nossa posse
     int max_b = pendentes.size() + 1;
 
+    int countBInserted = 0;
     // Começamos o indice a 3, porque jacobSeq[3] é o número '3' 
     // (ignoramos os 0, 1, 1 do início)
     for (size_t i = 3; i < JacobSequence.size(); i++)
@@ -347,12 +376,29 @@ void PmergeMe::DoPmergeMe()
 
             int NumberToInsert = pendentes[indexNoPendentes];
 
+            //Conta para perceber ate onde vou procurar
+            /*
+            maxSeachIndex = j + counterDeBInserido - 1
+
+            colocamos -1 porque como o b e menor do que A entao nao precisamos de contar com A na pesquisa
+
+            j = Nuemro do b que representa
+
+            maxSeachIndex = 3 + 0 - 1 = 2 B3
+
+            */
+            int maxSeachIndex = j + countBInserted - 1;
+
+            if(maxSeachIndex >= (int)mainChain.size())
+            {
+                maxSeachIndex = mainChain.size() - 1;
+            }
+
             // 🍌#grrrr 
-            //Tenho de fazer o meu
-            int pos = binarySearchPosition(mainChain,NumberToInsert,mainChain.size() - 1);
-    
+            int pos = binarySearchPosition(mainChain,NumberToInsert,maxSeachIndex);
             
             mainChain.insert(mainChain.begin() + pos, NumberToInsert);            
+            countBInserted++;
             // Insere o numero na posiçao exata
             j--;
         }
@@ -364,6 +410,18 @@ void PmergeMe::DoPmergeMe()
     this->printVec(mainChain);
     std::cout << std::endl;
     
+    std::cout << "Number of comparisons: " << this->comparisonsCount << std::endl;
+
+    /*
+
+    [X] descobrir porque e que estou a perder numeros
+    [X] Incrementar sempre que houver uma comparaçao
+    
+
+    [] Usar o deck
+    [] time stamp
+    */
+
 }
 
 #endif

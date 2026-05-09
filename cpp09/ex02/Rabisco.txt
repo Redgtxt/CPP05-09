@@ -118,3 +118,57 @@ index de pendentes + 2 vai sempre representar o b que vamos buscar
 
 0 + 2 = b2
 1 + 2 = b3
+
+
+-----------------------Inicio Programa -----------------
+11 2 17 0 16 8 6 15 10 3 21 1 18 9 14 19 12 5 4 20 13 7 
+-----------------------Vector Pares -----------------
+b: 2 a: 11 
+b: 0 a: 17 
+b: 8 a: 16 
+b: 6 a: 15 
+b: 3 a: 10 
+b: 1 a: 21 
+b: 9 a: 18 
+b: 14 a: 19 
+b: 5 a: 12 
+b: 4 a: 20 
+b: 7 a: 13 
+-----------------------Vector after sorted Pares -----------------
+b: 3 a: 10 
+b: 2 a: 11 
+b: 5 a: 12 
+b: 7 a: 13 
+b: 6 a: 15 
+b: 8 a: 16 
+b: 0 a: 17 
+b: 9 a: 18 
+b: 14 a: 19 
+b: 4 a: 20 
+b: 1 a: 21 
+
+----------------------- Main Chain Inicial -----------------
+    3  10 11 12 13 15 16 17 18 19 20 21 
+    B1 A1 A2 A3 A4 A5
+Idx 0   1 2  3  4  5
+----------------------- Pendentes (Para inserir) -----------------
+    2  5  7  6  8   0 9 14 4 1 
+    B2 B3 B4 B5 B6
+Idx 0  1  2  3  4   
+
+counterDeBInserido = 0
+atual = j + counterDeBInserido - 1
+
+colocamos -1 porque como o b e menor do que A entao nao precisamos de contar com A na pesquisa
+
+j = Nuemro do b que representa
+
+----------------------- MAIN CHAIN FINAL -----------------
+0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 
+
+
+--------Logica por de tras onde começar a pesquisar-----------------
+
+atual = 3 + 0 - 1 = 2 B3
+atual = 2 + 1 - 1 = 2 B2
+

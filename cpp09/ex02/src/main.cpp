@@ -2,27 +2,31 @@
 
 int main(int argc,char *argv[])
 {
-    (void) argv;
-    if(argc > 2)
+
+    try
     {
-        PmergeMe Pmerge;
-        if(!Pmerge.populateVector(argv))
+        if(argc > 2)
         {
-            std::cout << "Algo deu errado la dentro peço desculpa meu chapa" << std::endl;
-            return 1;
+            PmergeMe Pmerge;
+            Pmerge.populateVector(argv);
+    
+            //Printar vector para ver a info antes de a modificar
+            std::cout << "-----------------------Inicio Programa -----------------" << std::endl;
+            Pmerge.printVec(Pmerge.getNums());
+    
+            std::cout << std::endl;
+    
+            Pmerge.DoPmergeMe();
+    
+        }else{
+            std::cerr << "Try Program name and a sequence of numbers" << std::endl;
         }
-
-        //Printar vector para ver a info antes de a modificar
-        std::cout << "-----------------------Inicio Programa -----------------" << std::endl;
-        Pmerge.printVec(Pmerge.getNums());
-
-        std::cout << std::endl;
-
-        Pmerge.DoPmergeMe();
-
-    }else{
-        std::cout << "Try Program name and a sequence of numbers" << std::endl;
     }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    
 
     return 0;
 }
