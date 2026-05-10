@@ -43,14 +43,14 @@ void PmergeMe::createPairs(size_t init, Container &nums, PairContainer &pares, i
 // ─── sortA ───────────────────────────────────────────────────────────────────
 
 template <typename PairContainer>
-void PmergeMe::sortA(PairContainer &vec)
+void PmergeMe::sortA(PairContainer &container)
 {
-    if (vec.size() <= 1)
+    if (container.size() <= 1)
         return;
 
-    size_t mid = vec.size() / 2;
-    PairContainer left(vec.begin(), vec.begin() + mid);
-    PairContainer right(vec.begin() + mid, vec.end());
+    size_t mid = container.size() / 2;
+    PairContainer left(container.begin(), container.begin() + mid);
+    PairContainer right(container.begin() + mid, container.end());
 
     sortA(left);
     sortA(right);
@@ -60,12 +60,12 @@ void PmergeMe::sortA(PairContainer &vec)
     {
         ++_comparisonsCount;
         if (left[i].a <= right[j].a)
-            vec[k++] = left[i++];
+            container[k++] = left[i++];
         else
-            vec[k++] = right[j++];
+            container[k++] = right[j++];
     }
-    while (i < left.size())  vec[k++] = left[i++];
-    while (j < right.size()) vec[k++] = right[j++];
+    while (i < left.size())  container[k++] = left[i++];
+    while (j < right.size()) container[k++] = right[j++];
 }
 
 // ─── binarySearchPosition ────────────────────────────────────────────────────
@@ -114,7 +114,7 @@ void PmergeMe::doSort(Container &nums, const std::string &label)
     if (last != -1)
         pendentes.push_back(last);
 
-    // 3. Inserção por ordem de Jacobsthal
+    // 3. Inserçao por ordem de Jacobsthal
     std::vector<int> jacobSeq = buildJacobsthalSequence((int)pendentes.size());
 
     int lastJacob = 1;
@@ -143,9 +143,9 @@ void PmergeMe::doSort(Container &nums, const std::string &label)
     }
 
     // 4. Output
-    std::cout << "[" << label << "] Resultado:   ";
+    std::cout << "[" << label << "] Result:   ";
     printContainer(mainChain);
-    std::cout << "\n[" << label << "] Comparações: " << _comparisonsCount << "\n";
+    std::cout << "\n[" << label << "] Comparisons: " << _comparisonsCount << "\n";
     std::cout << (isSorted(mainChain) ? "OK" : "ERRO") << "\n";
 }
 

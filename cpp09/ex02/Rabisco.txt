@@ -161,7 +161,7 @@ atual = j + counterDeBInserido - 1
 
 colocamos -1 porque como o b e menor do que A entao nao precisamos de contar com A na pesquisa
 
-j = Nuemro do b que representa
+j = Numero do b que representa
 
 ----------------------- MAIN CHAIN FINAL -----------------
 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 

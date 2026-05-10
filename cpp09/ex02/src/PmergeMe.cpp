@@ -33,6 +33,23 @@ PmergeMe::PmergeMe() : _comparisonsCount(0) {}
 
 PmergeMe::~PmergeMe() {}
 
+
+PmergeMe::PmergeMe(const PmergeMe &obj) : _vecNums(obj._vecNums),_deqNums(obj._deqNums),_comparisonsCount(obj._comparisonsCount)
+{
+    *this = obj;
+}
+
+PmergeMe& PmergeMe::operator=(const PmergeMe& other)
+{
+    if(this != &other)
+    {
+       _vecNums = other._vecNums;
+       _deqNums = other._deqNums;
+       _comparisonsCount = other._comparisonsCount;
+    }
+    return *this;
+}
+
 // ─── parseInput ───────────────────────────────────────────────────────────────
 
 bool PmergeMe::parseInput(char *argv[])
@@ -87,7 +104,7 @@ std::vector<int> PmergeMe::buildJacobsthalSequence(int size_pendentes)
 
 void PmergeMe::DoPmergeMe()
 {
-    std::cout << "Antes: ";
+    std::cout << "Before: ";
     printContainer(_vecNums);
     std::cout << "\n";
 
@@ -96,9 +113,8 @@ void PmergeMe::DoPmergeMe()
         _comparisonsCount = 0;
         unsigned long start = timer();
         doSort(_vecNums, "vector");
-        unsigned long elapsed = timer() - start;
-        std::cout << "Tempo vector: " << elapsed << " µs\n\n";
-
+        double elapsed = (timer() - start) / 1000.0;
+        std::cout << "TIme to process a range of " << _vecNums.size() <<   elapsed << " µs\n\n";
     }
 
     // ── Deque ─────────────────────────────────────────────────────────────────
@@ -106,8 +122,7 @@ void PmergeMe::DoPmergeMe()
         _comparisonsCount = 0;
         unsigned long start = timer();
         doSort(_deqNums, "deque");
-        unsigned long elapsed = timer() - start;
-        std::cout << "Tempo deque: " << elapsed << " µs\n\n";
-
+        double elapsed = (timer() - start) / 1000.0;
+        std::cout << "TIme to process a range of " << _deqNums.size() <<   elapsed << " µs\n\n";
     }
 }

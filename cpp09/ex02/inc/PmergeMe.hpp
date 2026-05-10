@@ -28,6 +28,8 @@ class PmergeMe
 {
 public:
     PmergeMe();
+    PmergeMe(const PmergeMe &obj);
+    PmergeMe& operator=(const PmergeMe& other);
     ~PmergeMe();
 
     bool parseInput(char *argv[]);
@@ -57,7 +59,7 @@ private:
     void createPairs(size_t init, Container &nums, PairContainer &pares, int &last);
 
     template <typename PairContainer>
-    void sortA(PairContainer &vec);
+    void sortA(PairContainer &container);
 
     template <typename Container>
     int binarySearchPosition(const Container &mainChain, int target, int high);
