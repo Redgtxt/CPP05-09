@@ -1,83 +1,80 @@
 #include "Span.hpp"
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
 
-int main()
-{
-    //Will print Error because size is bigger than the vecSIZE
-    try
-    {
-        size_t size = 100;
-        srand(time(0));
-        Span span(size);
 
-        for (size_t i = 0; i < size + 20; i++)
+int main() {
+    std::srand(std::time(NULL));
+
+    // -------------------------------------------------------------------------
+    //  SUBJECT EXAMPLE TEST
+    // -------------------------------------------------------------------------
+
+    std::cout << "--- 1. Subject Example Test ---" << std::endl;
+    try {
+        Span sp = Span(5);
+        sp.addNumber(6);
+        sp.addNumber(3);
+        sp.addNumber(17);
+        sp.addNumber(9);
+        sp.addNumber(11);
+
+        std::cout << "Shortest span: " << sp.shortestSpan() << " (Expected: 2)" << std::endl;
+        std::cout << "Longest span:  " << sp.longestSpan() << " (Expected: 14)" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "Exception: " << e.what() << std::endl;
+    }
+    std::cout << std::endl;
+
+    // -------------------------------------------------------------------------
+    // EXCEPTION TESTING
+    // -------------------------------------------------------------------------
+
+    std::cout << "--- 2. Exception Testing ---" << std::endl;
+    try {
+        std::cout << "[Attempting to find span on empty Span]" << std::endl;
+        Span emptySpan(5);
+        emptySpan.shortestSpan();
+    } catch (const std::exception& e) {
+        std::cerr << "Caught expected exception: " << e.what() << std::endl;
+    }
+
+    try {
+        std::cout << "[Attempting to add elements beyond capacity]" << std::endl;
+        Span tinySpan(2);
+        tinySpan.addNumber(1);
+        tinySpan.addNumber(2);
+        tinySpan.addNumber(3); // Should throw here
+    } catch (const std::exception& e) {
+        std::cerr << "Caught expected exception: " << e.what() << std::endl;
+    }
+    std::cout << std::endl;
+
+    // -------------------------------------------------------------------------
+    // RANGE ITERATOR FILL & 10,000+ ELEMENTS TEST
+    // -------------------------------------------------------------------------
+
+    std::cout << "--- 3. Large Range Test (15,000 elements) ---" << std::endl;
+    try {
+        Span largeSpan(15000);
+        std::vector<int> randomNumbers;
+
+        // Generating 15,000 random integers
+        for (int i = 0; i < 15000; ++i)
         {
-            span.addNumber(rand());
-        }
-        
-        span.printVec();
-
-        std::cout << "Shortest Span is: " << span.shortestSpan() << std::endl;
-        std::cout << "Longest Span is: " << span.logestSpan() << std::endl;
-    
-
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
-    }
-
-
-    //Test with small nums
-    try
-    {
-        size_t size = 10;
-        srand(time(0));
-        Span span(size);
-
-        for (size_t i = 0; i < size; i++)
-        {
-            span.addNumber(rand());
-        }
-        
-        span.printVec();
-
-        std::cout << "Shortest Span is: " << span.shortestSpan() << std::endl;
-        std::cout << "Longest Span is: " << span.logestSpan() << std::endl;
-    
-
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
-    }
-
-    std::cout << "\n" << std::endl;
-
-
-    //Test with big Nums
-    try
-    {
-        size_t size = 6;
-        srand(time(0));
-        Span span(size);
-        std::vector <int> test;
-        span.printVec();
-
-        for (size_t i = 0; i < size; i++)
-        {
-            test.push_back(rand());
+            randomNumbers.push_back(std::rand());
         }
 
-        span.addRange(test.begin(),test.end());
-        
-        span.printVec();
+        //Inserting the numbers
+        largeSpan.addRange(randomNumbers.begin(), randomNumbers.end());
+        std::cout << "Successfully added 15,000 elements using iterator range." << std::endl;
 
-        std::cout << "Shortest Span is: " << span.shortestSpan() << std::endl;
-        std::cout << "Longest Span is: " << span.logestSpan() << std::endl;
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
+        std::cout << "Shortest span: " << largeSpan.shortestSpan() << std::endl;
+        std::cout << "Longest span:  " << largeSpan.longestSpan() << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "Exception: " << e.what() << std::endl;
     }
 
+    return 0;
 }

@@ -3,24 +3,19 @@
 
 Span::Span() : _n(0)
 {
-    std::cout << "Default constructor without parameters called" << std::endl;
 }
 
 Span::Span(unsigned int size) : _n(size)
 {
-    std::cout << "Constructor with parameters called" << std::endl;
 }
 
 Span::Span(const Span &obj)
 {
-    std::cout << "Span Copy constructor called" << std::endl;
     *this = obj;
 }
 
 Span& Span::operator=(const Span& other)
 {
-    std::cout << "Copy assignment Span operator called" << std::endl;
-
     if(this != &other)
     {
         _n = other.getN();
@@ -60,7 +55,7 @@ void Span::printVec()
     std::cout << "\n";
 }
 
-long Span::logestSpan()
+long Span::longestSpan()
 {
     if(2 > this->_vec.size())
         throw (Span::ToSmall());
@@ -106,5 +101,4 @@ unsigned int Span::getN() const
 
 Span::~Span()
 {
-    std::cout << "Destructor called bye bye" << std::endl;
 }

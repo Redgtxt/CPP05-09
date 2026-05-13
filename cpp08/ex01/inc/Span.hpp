@@ -29,7 +29,7 @@ public:
     unsigned int getN() const;
 
 
-    long logestSpan();
+    long longestSpan();
     long shortestSpan();
     void addNumber(unsigned int num);
     void addRange(std::vector<int>::iterator begin, std::vector<int>::iterator end);
