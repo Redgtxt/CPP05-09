@@ -1,7 +1,7 @@
 #include "../inc/BitcoinExchange.hpp"
 
 /*
-    [X]• Your program must take a file as an argument.
+[X]• Your program must take a file as an argument.
 • Each line in this file must use the following format: "date | value".
 • A valid date will always be in the following format: Year-Month-Day.
 • A valid value must be either a float or a positive integer, between 0 and 1000.
@@ -22,19 +22,11 @@ int main(int argc,char *argv[])
             return 1;
         }
 
-        //Vou verificar se e um ficheiro
-        /*
-            Verificar se e um ficheiro
-            Se tem permissoes para abrir
-            Se nao esta vazio
-        */
-
         BitcoinExchange btc;
-
-        btc.CheckFile(argv[1]);
+        btc.ValidateFiles(argv[1]);
 
     }
     catch(const std::exception& e)    {
             std::cerr << e.what() << '\n';
-        } 
+    } 
 }
