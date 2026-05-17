@@ -21,6 +21,19 @@ BitcoinExchange::~BitcoinExchange()
 {
 }
 
+BitcoinExchange::BitcoinExchange(const BitcoinExchange& obj)
+{
+    *this =  obj;
+}
+
+BitcoinExchange& BitcoinExchange::operator=(const BitcoinExchange& obj)
+{
+    if(this != &obj)
+    {
+        this->_bd = obj._bd;
+    }
+    return *this;
+}
 
 void BitcoinExchange::PopulateDb(const char *argv,std::map<std::string,float>& _map)
 {

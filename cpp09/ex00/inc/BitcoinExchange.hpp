@@ -15,6 +15,8 @@ private:
 
 public:
     BitcoinExchange();
+    BitcoinExchange(const BitcoinExchange& obj);
+    BitcoinExchange& operator=(const BitcoinExchange& obj);
     ~BitcoinExchange();
 
     void PopulateDb(const char *argv,std::map<std::string,float>& _map);
