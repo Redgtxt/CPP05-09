@@ -41,7 +41,6 @@ void BitcoinExchange::PopulateDb(const char *argv,std::map<std::string,float>& _
     if(!file)
         throw BitcoinExchange::BitcoinExchangeError(BitcoinExchange::BitcoinExchangeError::FileDoesNotExist);
 
-    
     std::string content;
     if (!std::getline(file, content))
         throw BitcoinExchange::BitcoinExchangeError(BitcoinExchange::BitcoinExchangeError::FileIsEmpty);
@@ -53,12 +52,8 @@ void BitcoinExchange::PopulateDb(const char *argv,std::map<std::string,float>& _
     {
         std::size_t pos = content.find(',');
 
-        //std::cout << "line: " << content << std::endl;
-        //std::cout << "comma pos: " << pos << std::endl;
         key = content.substr(0, pos);
-        //std::cout << "key: " << key << std::endl;
         value = content.substr(pos + 1);
-        //std::cout << "value: " << value << std::endl;
         val = std::strtof(value.c_str(),NULL);
         _map[key];
         _map[key] = val;
@@ -68,7 +63,8 @@ void BitcoinExchange::PopulateDb(const char *argv,std::map<std::string,float>& _
     file.close();
 }
 
-bool isLeapYear(int year) {
+bool isLeapYear(int year)
+{
     // A leap year is divisible by 4, but not by 100, unless it is also divisible by 400
     return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
 }
@@ -197,10 +193,6 @@ void BitcoinExchange::CheckInputFile(const char *filename)
         
         key = content.substr(0,pos);
         value = content.substr(pos + 3);
-        //std::cout << "key: " << key << std::endl;
-        //Dar parse ao valor para ver se a data e valida
-        
-       // std::cout << "value: " << value << std::endl;
         if(!isValidDate(key))
         {
             std ::cerr << "Error: bad input => " << key << std::endl;
@@ -213,39 +205,36 @@ void BitcoinExchange::CheckInputFile(const char *filename)
             continue;
         }
 
-        //Fazer a multiplicaçao
-
         /*
-        Lowerbound vai returnar um iterador para o primeiro elemento que e maior ou igual a chave que foi pedida
+            Lowerbound vai returnar um iterador para o primeiro elemento que e maior ou igual a chave que foi pedida
 
-        pode aconter 3 casos
-        Caso 1
-        >=
-        a data existe ou seja vai returnar a data pois e maior ou igual
-        Caso 2
-        Data esta no meio mas nao existe
-        Vai returnar a data mais proxima ou seja temos de decrementar o iterador 
-        --it
-        Caso 3
-        A data e mais antiga que TUDO na database
+            pode aconter 3 casos
+            Caso 1
+            >=
+            a data existe ou seja vai returnar a data pois e maior ou igual
+            Caso 2
+            Data esta no meio mas nao existe
+            Vai returnar a data mais proxima ou seja temos de decrementar o iterador 
+            --it
+            Caso 3
+            A data e mais antiga que TUDO na database
 
         */
 
         std::map<std::string, float>::iterator it = _bd.lower_bound(key);
         if(it != _bd.end() && it->first == key)
         {
-            //Data correta nao preciso de fazer nada pois o iterador ja esta no sitio correto
+        //Data correta nao preciso de fazer nada pois o iterador ja esta no sitio correto
         }else if(it == _bd.begin())
         {
             std::cerr << "Error: bad input => no data for date earlier than DB start." << std::endl;
             continue;
-        }else{
+        }else
+        {
             --it;
         }
-
         std::cout << key << " => " << bitcoinAmount << " = " << (bitcoinAmount * it->second) << std::endl;
     }
-    
     
     file.close();
 }
@@ -254,7 +243,5 @@ void BitcoinExchange::ValidateFiles(const char *filename)
 {
 
     PopulateDb("data.csv", this->_bd);
-    //printMap(this->_bd);
     CheckInputFile(filename);
-    //CheckFile(filename, this->_bd);
 }

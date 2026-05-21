@@ -23,12 +23,14 @@ const char *Rpn::RpnError::what() const throw()
     }
 }
 
-
 // ── Rpn ───────────────────────────────────────────────────────────────────────
 
 Rpn::Rpn() {}
+
 Rpn::Rpn(const Rpn& other) { *this = other; }
+
 Rpn& Rpn::operator=(const Rpn& other) { (void)other; return *this; }
+
 Rpn::~Rpn() {}
 
 void Rpn::calculate(const std::string& expression) const
@@ -74,7 +76,8 @@ void Rpn::calculate(const std::string& expression) const
 
             rpnStack.push(static_cast<int>(result));
         }
-        else if (std::isdigit(c)) {
+        else if (std::isdigit(c))
+        {
             char next = expression[i + 1];
             if (next != ' ' && next != '\0')
                 throw RpnError(RpnError::MultiDigitNumber);
@@ -90,3 +93,23 @@ void Rpn::calculate(const std::string& expression) const
 
     std::cout << rpnStack.top() << std::endl;
 }
+
+
+/*
+
+6 2 / 3 + 4 * 5 -
+
+Stack [6,2]
+6 / 2 = 3
+
+stacl[3,3]
+3 + 3 = 6
+
+stack[6,4]
+6 * 4 = 24
+
+stack [24,5]
+24 - 5 = 19
+
+
+*/

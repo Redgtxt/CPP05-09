@@ -10,7 +10,7 @@ unsigned long timer()
     return (tv.tv_sec * 1000000UL) + tv.tv_usec;
 }
 
-// ─── Erro ────────────────────────────────────────────────────────────────────
+// ─── Error ────────────────────────────────────────────────────────────────────
 
 PmergeMe::PmergeMeError::PmergeMeError(Type type) : _type(type) {}
 
@@ -27,7 +27,7 @@ const char *PmergeMe::PmergeMeError::what() const throw()
     }
 }
 
-// ─── Construtores ─────────────────────────────────────────────────────────────
+// ─── Constructors ─────────────────────────────────────────────────────────────
 
 PmergeMe::PmergeMe() : _comparisonsCount(0) {}
 

@@ -93,13 +93,13 @@ void PmergeMe::doSort(Container &nums, const std::string &label)
 {
     typedef std::vector<MyPair> PairContainer;
 
-    // 1. Criar e ordenar pares
+    // Create and sort Pais
     PairContainer pares;
     int last = -1;
     createPairs(0, nums, pares, last);
     sortA(pares);
 
-    // 2. Construir mainChain e pendentes
+    // Create main chain and pendentes
     Container mainChain;
     Container pendentes;
 
@@ -114,7 +114,7 @@ void PmergeMe::doSort(Container &nums, const std::string &label)
     if (last != -1)
         pendentes.push_back(last);
 
-    // 3. Inserçao por ordem de Jacobsthal
+    // Insert by jacobSequence
     std::vector<int> jacobSeq = buildJacobsthalSequence((int)pendentes.size());
 
     int lastJacob = 1;
@@ -142,11 +142,11 @@ void PmergeMe::doSort(Container &nums, const std::string &label)
         lastJacob = curJacob;
     }
 
-    // 4. Output
+    //Yappp The result
     std::cout << "[" << label << "] Result:   ";
     printContainer(mainChain);
     std::cout << "\n[" << label << "] Comparisons: " << _comparisonsCount << "\n";
-    std::cout << (isSorted(mainChain) ? "OK" : "ERRO") << "\n";
+    std::cout << (isSorted(mainChain) ? "OK" : "ERROR") << "\n";
 }
 
 template <typename Container>

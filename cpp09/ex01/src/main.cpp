@@ -1,11 +1,9 @@
 #include "Rpn.hpp"
-
 #include "Rpn.hpp"
 #include <iostream>
 
-int main(int argc, char *argv[]) {
-
-
+int main(int argc, char *argv[])
+{
     try
     {
         Rpn Rpn;
@@ -22,6 +20,5 @@ int main(int argc, char *argv[]) {
         return 1;
     }
     
-
     return 0;
 }
